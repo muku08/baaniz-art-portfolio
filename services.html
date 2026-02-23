@@ -18,22 +18,18 @@
 
 <body>
 
-    <!-- Hamburger Menu Button -->
-    <button id="hamburger-btn" aria-label="Open navigation menu">&#9776;</button>
-
-    <!-- Sidebar Overlay -->
-    <div id="sidebar-overlay"></div>
-
-    <!-- Sidebar Navigation -->
-    <nav id="sidebar">
-        <button id="sidebar-close" aria-label="Close navigation menu">&times;</button>
-        <ul class="sidebar-links">
-            <li><a href="about.html">About Me</a></li>
-            <li><a href="services.html" class="active">Services</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li><a href="index.html">Portfolio</a></li>
-        </ul>
-    </nav>
+    <!-- Top Sticky Navigation -->
+    <header class="top-nav">
+        <nav class="nav-container">
+            <a href="index.html" class="nav-logo">Baaniz</a>
+            <ul class="nav-links">
+                <li><a href="about.html">About Me</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="index.html#reviews">Client Reviews</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <!-- Services Hero -->
     <section class="services-hero">
@@ -115,6 +111,55 @@
 
         </div>
     </main>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="terms-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">Commission Terms &amp; Conditions</h2>
+            <div class="modal-body">
+                <p>Welcome! To ensure we create the best possible artwork for your project, please read through these
+                    simple terms before we get started. By commissioning a project, you agree to the following workflow
+                    and refund policies.</p>
+
+                <h3>1. Project Kickoff &amp; Your Vision</h3>
+                <p>Great art starts with a great brief. To get the best results—whether it is a logo, a custom PFP, or a
+                    sticker pack—I need to know what is in your head.</p>
+                <ul>
+                    <li><strong>Clear Ideas:</strong> You must provide a clear, detailed description of what you are
+                        looking for before work begins.</li>
+                    <li><strong>References:</strong> If you have any mood boards, sketches, color palettes, or reference
+                        images, please share them upfront! The more visual context you provide, the closer the first
+                        draft will be to your vision.</li>
+                </ul>
+
+                <h3>2. Communication &amp; Feedback</h3>
+                <p>Collaboration is key to this process. Once I start working on your project, I will send you rough
+                    sketches and work-in-progress samples.</p>
+                <ul>
+                    <li><strong>Timely Responses:</strong> You are expected to provide regular, constructive feedback on
+                        the samples provided.</li>
+                    <li><strong>Revisions:</strong> Prompt feedback allows me to make adjustments early in the process
+                        and ensures your final assets are delivered on time.</li>
+                </ul>
+
+                <h3>3. The 80/20 Refund Policy (The "Kill Fee")</h3>
+                <p>Sometimes, despite our best efforts, a project just doesn't click. If we go through the sampling and
+                    feedback process but ultimately cannot come to a mutual conclusion on the final artistic direction,
+                    we will close the project.</p>
+                <ul>
+                    <li><strong>The Refund:</strong> In this scenario, you will receive an 80% refund of your total
+                        payment.</li>
+                    <li><strong>The Deduction:</strong> The remaining 20% is retained as a non-refundable fee to cover
+                        the time, labor, and creative effort already spent conceptualizing and drafting your initial
+                        samples.</li>
+                </ul>
+            </div>
+            <div class="modal-actions">
+                <button id="reject-terms" class="btn-reject">Reject</button>
+                <button id="accept-terms" class="btn-accept">Accept and move forward</button>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-content">

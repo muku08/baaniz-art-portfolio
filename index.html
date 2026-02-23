@@ -17,25 +17,33 @@
 
 <body>
 
-        <!-- Hamburger Menu Button -->
-        <button id="hamburger-btn" aria-label="Open navigation menu">&#9776;</button>
+        <!-- Interactive Splash Screen -->
+        <div id="splash-screen" class="splash-screen">
+                <div class="splash-content">
+                        <img src="images/logo.png" alt="BAANIIzz Mascot" class="splash-logo">
+                        <div class="splash-buttons">
+                                <button id="btn-canvas" class="splash-btn btn-dusty">Enter the Canvas</button>
+                                <button id="btn-blockchain" class="splash-btn btn-sage">Enter the Blockchain</button>
+                        </div>
+                </div>
+        </div>
 
-        <!-- Sidebar Overlay -->
-        <div id="sidebar-overlay"></div>
-
-        <!-- Sidebar Navigation -->
-        <nav id="sidebar">
-                <button id="sidebar-close" aria-label="Close navigation menu">&times;</button>
-                <ul class="sidebar-links">
-                        <li><a href="about.html">About Me</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-        </nav>
+        <!-- Top Sticky Navigation -->
+        <header class="top-nav">
+                <nav class="nav-container">
+                        <a href="index.html" class="nav-logo">Baaniz</a>
+                        <ul class="nav-links">
+                                <li><a href="about.html">About Me</a></li>
+                                <li><a href="services.html">Services</a></li>
+                                <li><a href="index.html#reviews">Client Reviews</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                </nav>
+        </header>
 
         <header class="hero">
                 <div class="hero-content">
-                        <img src="logo.png" alt="BAANIIzz Logo" class="hero-logo">
+                        <img src="images/logo.png" alt="BAANIIzz Logo" class="hero-logo">
                         <h1>Baaniz</h1>
                         <p class="bio">I spark Web3 convos on art & accountability</p>
                 </div>
@@ -78,7 +86,7 @@
         </main>
 
         <!-- The Sketchbook Section -->
-        <section class="sketchbook-container">
+        <section class="sketchbook-container" id="sketchbook">
                 <h2 class="sketchbook-title">The Raw Files.</h2>
                 <p class="sketchbook-intro">Before the polished vectors, the clean logos, and the digital layers,
                         everything starts here. This section is a look inside my actual sketchbook—the unfiltered,
@@ -111,78 +119,57 @@
                 </div>
         </section>
 
-        <!-- Happy Clients Marquee -->
-        <section class="clients-section">
-                <h2 class="clients-title">Happy Clients</h2>
+        <!-- Client Love Marquee -->
+        <section class="clients-section" id="reviews">
+                <h2 class="clients-title">Client Love</h2>
+                <div class="review-stats" id="review-stats">
+                        <span class="average-rating" id="avg-rating">5.0</span>
+                        <span class="star-icon">&#9733;</span>
+                        <span class="total-reviews" id="total-reviews">(1 Review)</span>
+                </div>
+
                 <div class="marquee-wrapper">
-                        <div class="marquee-track">
-                                <!-- Original set -->
-                                <a href="https://x.com/ScroogeMcNFT" target="_blank" rel="noopener noreferrer"
-                                        class="client-card">
-                                        <img src="https://unavatar.io/x/ScroogeMcNFT" alt="ScroogeMcNFT"
-                                                class="client-pfp">
-                                        <span class="client-handle">@ScroogeMcNFT</span>
-                                </a>
-                                <a href="https://x.com/castronft36" target="_blank" rel="noopener noreferrer"
-                                        class="client-card">
-                                        <img src="https://unavatar.io/x/castronft36" alt="castronft36"
-                                                class="client-pfp">
-                                        <span class="client-handle">@castronft36</span>
-                                </a>
-                                <a href="https://x.com/DaDawgHQ" target="_blank" rel="noopener noreferrer"
-                                        class="client-card">
-                                        <img src="https://unavatar.io/x/DaDawgHQ" alt="DaDawgHQ" class="client-pfp">
-                                        <span class="client-handle">@DaDawgHQ</span>
-                                </a>
-                                <a href="https://x.com/shredder_tegg" target="_blank" rel="noopener noreferrer"
-                                        class="client-card">
-                                        <img src="https://unavatar.io/x/shredder_tegg" alt="shredder_tegg"
-                                                class="client-pfp">
-                                        <span class="client-handle">@shredder_tegg</span>
-                                </a>
-                                <a href="https://x.com/badsaint_0x" target="_blank" rel="noopener noreferrer"
-                                        class="client-card">
-                                        <img src="https://unavatar.io/x/badsaint_0x" alt="badsaint_0x"
-                                                class="client-pfp">
-                                        <span class="client-handle">@badsaint_0x</span>
-                                </a>
-                                <a href="https://x.com/charmis26" target="_blank" rel="noopener noreferrer"
-                                        class="client-card">
-                                        <img src="https://unavatar.io/x/charmis26" alt="charmis26" class="client-pfp">
-                                        <span class="client-handle">@charmis26</span>
-                                </a>
-                                <!-- Duplicate set for seamless loop -->
-                                <a href="https://x.com/ScroogeMcNFT" target="_blank" rel="noopener noreferrer"
-                                        class="client-card" aria-hidden="true">
-                                        <img src="https://unavatar.io/x/ScroogeMcNFT" alt="" class="client-pfp">
-                                        <span class="client-handle">@ScroogeMcNFT</span>
-                                </a>
-                                <a href="https://x.com/castronft36" target="_blank" rel="noopener noreferrer"
-                                        class="client-card" aria-hidden="true">
-                                        <img src="https://unavatar.io/x/castronft36" alt="" class="client-pfp">
-                                        <span class="client-handle">@castronft36</span>
-                                </a>
-                                <a href="https://x.com/DaDawgHQ" target="_blank" rel="noopener noreferrer"
-                                        class="client-card" aria-hidden="true">
-                                        <img src="https://unavatar.io/x/DaDawgHQ" alt="" class="client-pfp">
-                                        <span class="client-handle">@DaDawgHQ</span>
-                                </a>
-                                <a href="https://x.com/shredder_tegg" target="_blank" rel="noopener noreferrer"
-                                        class="client-card" aria-hidden="true">
-                                        <img src="https://unavatar.io/x/shredder_tegg" alt="" class="client-pfp">
-                                        <span class="client-handle">@shredder_tegg</span>
-                                </a>
-                                <a href="https://x.com/badsaint_0x" target="_blank" rel="noopener noreferrer"
-                                        class="client-card" aria-hidden="true">
-                                        <img src="https://unavatar.io/x/badsaint_0x" alt="" class="client-pfp">
-                                        <span class="client-handle">@badsaint_0x</span>
-                                </a>
-                                <a href="https://x.com/charmis26" target="_blank" rel="noopener noreferrer"
-                                        class="client-card" aria-hidden="true">
-                                        <img src="https://unavatar.io/x/charmis26" alt="" class="client-pfp">
-                                        <span class="client-handle">@charmis26</span>
-                                </a>
+                        <div class="marquee-track" id="marquee-track">
+                                <!-- Original set injected via JS -->
                         </div>
+                </div>
+        </section>
+
+        <!-- Leave a Review Form -->
+        <section class="review-submission-section" id="leave-review">
+                <div class="form-container">
+                        <h3 class="form-title">Leave a Review</h3>
+                        <p class="form-subtitle">Worked with me recently? Drop a review below!</p>
+
+                        <form id="review-form" class="review-form">
+                                <div class="form-group">
+                                        <label for="reviewer-name">Name</label>
+                                        <input type="text" id="reviewer-name" name="name" required
+                                                placeholder="Your name or alias">
+                                </div>
+                                <div class="form-group">
+                                        <label for="reviewer-social">X (Twitter) Profile Link</label>
+                                        <input type="url" id="reviewer-social" name="social" required
+                                                placeholder="https://x.com/yourhandle">
+                                </div>
+                                <div class="form-group">
+                                        <label>Rating</label>
+                                        <div class="star-rating" id="star-rating-input">
+                                                <span class="star" data-value="1">&#9733;</span>
+                                                <span class="star" data-value="2">&#9733;</span>
+                                                <span class="star" data-value="3">&#9733;</span>
+                                                <span class="star" data-value="4">&#9733;</span>
+                                                <span class="star" data-value="5">&#9733;</span>
+                                        </div>
+                                        <input type="hidden" id="rating-value" name="rating" value="0" required>
+                                </div>
+                                <div class="form-group">
+                                        <label for="reviewer-comment">Your Comment</label>
+                                        <textarea id="reviewer-comment" name="comment" rows="4" required
+                                                placeholder="Share your experience..."></textarea>
+                                </div>
+                                <button type="submit" class="submit-review-btn">Submit Review</button>
+                        </form>
                 </div>
         </section>
 
@@ -198,7 +185,7 @@
                 <img class="lightbox-content" id="lightbox-img" alt="Fullscreen artwork view">
         </div>
 
-        <script src="script.js"></script>
+        <script src="script.js?v=2"></script>
 </body>
 
 </html>
