@@ -134,7 +134,7 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(2.2);
+    transform: scale(1.5);
     transform-origin: center 65%;
     /* Focus zoom on the penguin's face, not the blank upper area */
 }
