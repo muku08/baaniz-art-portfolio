@@ -145,6 +145,27 @@ h3 {
     justify-content: center;
 }
 
+@media (max-width: 768px) {
+    .splash-logo-wrapper {
+        width: 160px;
+        height: 160px;
+        margin-bottom: 30px;
+    }
+
+    .splash-buttons {
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .splash-btn {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+
 .splash-btn {
     font-family: 'Outfit', sans-serif;
     font-size: 1.1rem;
