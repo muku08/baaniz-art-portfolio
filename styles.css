@@ -131,9 +131,9 @@ h3 {
 .splash-logo {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center 35%;
-    /* Shifts penguin upward inside the circle */
+    object-fit: cover;
+    object-position: center 80%;
+    /* Penguin is in the bottom of the tall image — zoom into that area */
 }
 
 .splash-buttons {
