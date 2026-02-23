@@ -135,7 +135,8 @@ h3 {
     height: 100%;
     object-fit: cover;
     transform: scale(2.2);
-    /* Zooms in to remove empty padding on high-res logo */
+    transform-origin: center 65%;
+    /* Focus zoom on the penguin's face, not the blank upper area */
 }
 
 .splash-buttons {
