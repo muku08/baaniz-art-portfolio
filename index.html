@@ -187,7 +187,33 @@
                 <img class="lightbox-content" id="lightbox-img" alt="Fullscreen artwork view">
         </div>
 
-        <script src="script.js?v=2"></script>
+        <!-- Firebase SDK -->
+        <script type="module">
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+                import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp }
+                        from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+                const firebaseConfig = {
+                        apiKey: "AIzaSyBFCiagkGZybwg46hqrRpLYGgB3WSutEkw",
+                        authDomain: "baanizart.firebaseapp.com",
+                        projectId: "baanizart",
+                        storageBucket: "baanizart.firebasestorage.app",
+                        messagingSenderId: "25279123704",
+                        appId: "1:25279123704:web:c96dc0ca471eb36eeb2b0d",
+                        measurementId: "G-KKBHDBPKR7"
+                };
+
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+
+                // Expose Firebase tools globally for script.js
+                window.firebaseDB = db;
+                window.firebaseTools = { collection, addDoc, getDocs, query, orderBy, serverTimestamp };
+
+                // Dispatch event to let script.js know Firebase is ready
+                window.dispatchEvent(new Event('firebase-ready'));
+        </script>
+        <script src="script.js?v=3"></script>
 </body>
 
 </html>

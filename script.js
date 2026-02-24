@@ -146,29 +146,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000 + (index * 50));
     });
 
-    // --- Dynamic Reviews & Stats ---
-    // Hidden admin feature: URL Parameter to clear reviews (?clear=true)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('clear') === 'true') {
-        localStorage.removeItem('baaniz_reviews');
-        // Remove the parameter from the URL cleanly
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
+    // --- Dynamic Reviews & Stats (Firebase Firestore) ---
     const marqueeTrack = document.getElementById('marquee-track');
     const avgRatingEl = document.getElementById('avg-rating');
     const totalReviewsEl = document.getElementById('total-reviews');
 
-    // Hidden admin feature: Double-click "Client Love" title to reset reviews
-    const clientsTitle = document.querySelector('.clients-title');
-    if (clientsTitle) {
-        clientsTitle.addEventListener('dblclick', () => {
-            localStorage.removeItem('baaniz_reviews');
-            location.reload();
-        });
-    }
-
-    // Default base review (Castro)
+    // Default base review (Castro) - used to seed Firestore if empty
     const defaultReview = {
         name: "Castro",
         handle: "@castronft36",
@@ -178,19 +161,17 @@ document.addEventListener('DOMContentLoaded', () => {
         avatar: "https://unavatar.io/x/castronft36"
     };
 
-    // Load custom reviews from localStorage if they exist
-    let reviews = [defaultReview];
-    const storedReviews = localStorage.getItem('baaniz_reviews');
-    if (storedReviews) {
-        try {
-            reviews = reviews.concat(JSON.parse(storedReviews));
-        } catch (e) {
-            console.error("Could not parse stored reviews", e);
-        }
-    }
+    let reviews = [];
 
     const renderReviews = () => {
         if (!marqueeTrack || !avgRatingEl || !totalReviewsEl) return;
+
+        if (reviews.length === 0) {
+            avgRatingEl.innerText = "0.0";
+            totalReviewsEl.innerText = "(0 Reviews)";
+            marqueeTrack.innerHTML = '<div class="review-card"><p class="review-comment">Loading reviews...</p></div>';
+            return;
+        }
 
         // Calculate Stats
         let totalStars = 0;
@@ -223,8 +204,56 @@ document.addEventListener('DOMContentLoaded', () => {
         marqueeTrack.innerHTML = cardsHTML + cardsHTML;
     };
 
-    // Initial render
+    // Show loading state immediately
     renderReviews();
+
+    // --- Load reviews from Firestore when Firebase is ready ---
+    const initFirebaseReviews = async () => {
+        const db = window.firebaseDB;
+        const { collection, getDocs, addDoc, query, orderBy, serverTimestamp } = window.firebaseTools;
+
+        try {
+            // Fetch all reviews from Firestore, ordered by timestamp
+            const reviewsRef = collection(db, 'reviews');
+            const q = query(reviewsRef, orderBy('timestamp', 'asc'));
+            const snapshot = await getDocs(q);
+
+            if (snapshot.empty) {
+                // Seed Firestore with the default Castro review
+                await addDoc(reviewsRef, {
+                    ...defaultReview,
+                    timestamp: serverTimestamp()
+                });
+                reviews = [defaultReview];
+            } else {
+                reviews = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return {
+                        name: data.name,
+                        handle: data.handle,
+                        link: data.link,
+                        rating: data.rating,
+                        comment: data.comment,
+                        avatar: data.avatar
+                    };
+                });
+            }
+
+            renderReviews();
+        } catch (error) {
+            console.error("Error loading reviews from Firestore:", error);
+            // Fallback to default review if Firestore fails
+            reviews = [defaultReview];
+            renderReviews();
+        }
+    };
+
+    // Listen for Firebase ready event
+    if (window.firebaseDB) {
+        initFirebaseReviews();
+    } else {
+        window.addEventListener('firebase-ready', initFirebaseReviews);
+    }
 
     // --- Interactive Star Rating ---
     const starContainer = document.getElementById('star-rating-input');
@@ -262,10 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Review Form Submission ---
+    // --- Review Form Submission (Firebase Firestore) ---
     const reviewForm = document.getElementById('review-form');
     if (reviewForm) {
-        reviewForm.addEventListener('submit', (e) => {
+        reviewForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const rating = parseInt(ratingInput.value);
@@ -288,8 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 link: socialInput,
                 rating: rating,
                 comment: commentInput,
-                // Using unavatar to attempt fetching the X profile pic if it exists. 
-                // If it fails, our onerror in renderReviews handles it safely.
                 avatar: `https://unavatar.io/x/${handle.replace('@', '')}`
             };
 
@@ -298,18 +325,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             submitBtn.innerText = "Submitting...";
             submitBtn.style.opacity = "0.7";
+            submitBtn.disabled = true;
 
-            setTimeout(() => {
-                // Save and re-render
+            try {
+                // Save to Firestore
+                const db = window.firebaseDB;
+                const { collection, addDoc, serverTimestamp } = window.firebaseTools;
+
+                await addDoc(collection(db, 'reviews'), {
+                    ...newReview,
+                    timestamp: serverTimestamp()
+                });
+
+                // Add to local array and re-render
                 reviews.push(newReview);
-
-                // Keep only custom user reviews in localStorage (skip default Castro)
-                const userReviews = reviews.slice(1);
-                localStorage.setItem('baaniz_reviews', JSON.stringify(userReviews));
-
                 renderReviews();
 
-                submitBtn.innerText = "Review Submitted!";
+                submitBtn.innerText = "Review Submitted! ✓";
                 submitBtn.style.background = "#DCAE96";
                 submitBtn.style.opacity = "1";
 
@@ -323,8 +355,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     submitBtn.innerText = originalText;
                     submitBtn.style.background = "";
+                    submitBtn.disabled = false;
                 }, 3000);
-            }, 600);
+
+            } catch (error) {
+                console.error("Error saving review to Firestore:", error);
+                submitBtn.innerText = "Error — try again";
+                submitBtn.style.background = "#e74c3c";
+                submitBtn.style.opacity = "1";
+
+                setTimeout(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.style.background = "";
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
         });
     }
 
